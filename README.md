@@ -1,6 +1,6 @@
 # 贪吃蛇游戏 (Snake Game)
 
-这是一个基于 Java Swing 开发的经典贪吃蛇游戏。
+这是一个基于 Java Swing 开发的经典贪吃蛇游戏。(注：几乎所有事情都是cursor完成的，包括这个Readme文档)
 
 ## 游戏介绍
 
