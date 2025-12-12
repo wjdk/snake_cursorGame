@@ -13,8 +13,9 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
     static final int UNIT_SIZE = 25;
-    static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
+    static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
     static final int DELAY = 75;
+    static final int TIME_SCORE_INTERVAL = 1; // 每100个游戏帧增加一次分数
 
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
+    int timeScoreCounter; // 用于记录时间分数增长的计数器
 
     GamePanel() {
         random = new Random();
@@ -41,6 +43,7 @@ public class GamePanel extends JPanel implements ActionListener {
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
+        timeScoreCounter = TIME_SCORE_INTERVAL; // 初始化时间分数计数器
     }
 
     public void paintComponent(Graphics g) {
@@ -155,6 +158,11 @@ public class GamePanel extends JPanel implements ActionListener {
             move();
             checkApple();
             checkCollisions();
+            timeScoreCounter--;
+            if (timeScoreCounter <= 0) {
+                applesEaten++; // 时间到，增加分数
+                timeScoreCounter = TIME_SCORE_INTERVAL; // 重置计数器
+            }
         }
         repaint();
     }
