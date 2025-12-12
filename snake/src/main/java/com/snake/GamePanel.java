@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -35,6 +37,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+        this.addMouseListener(new MyMouseAdapter()); // 添加鼠标监听
         startGame();
     }
 
@@ -150,6 +153,24 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+
+        // 添加重新开始提示
+        g.setFont(new Font("Ink Free", Font.BOLD, 30));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("Press Space or Click to Restart", (SCREEN_WIDTH - metrics3.stringWidth("Press Space or Click to Restart")) / 2, SCREEN_HEIGHT / 2 + 50);
+    }
+
+    public void restartGame() {
+        x[0] = 0; // 重置蛇头位置
+        y[0] = 0;
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        for (int i = 0; i < bodyParts; i++) { // 清空蛇身位置
+            x[i] = 0;
+            y[i] = 0;
+        }
+        startGame();
     }
 
     @Override
@@ -191,6 +212,21 @@ public class GamePanel extends JPanel implements ActionListener {
                         direction = 'D';
                     }
                     break;
+                case KeyEvent.VK_SPACE:
+                    if (!running) {
+                        restartGame();
+                    }
+                    break;
+            }
+        }
+    }
+
+    // 添加 MouseListener
+    private class MyMouseAdapter extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (!running) {
+                restartGame();
             }
         }
     }
