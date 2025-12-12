@@ -1,6 +1,7 @@
 # 贪吃蛇游戏 (Snake Game)
 
 ~~这是一个基于 Java Swing 开发的经典贪吃蛇游戏~~
+
 这是一个基于cursor(Gemini 2.5 Flash) 开发的经典贪吃蛇游戏
 ## 游戏介绍
 
